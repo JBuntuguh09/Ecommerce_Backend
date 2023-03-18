@@ -1,0 +1,28 @@
+const express = require('express')
+const { createUser, loginUser, getAllUser, getUser, updateUser, deleteUser, blockUser, unblockUser, handleRefreshToken, logout, updatePassword, forgotPasswordToken, resetPassword, getWishList, userCart, getUserCart, emptyUserCart, createOrder, getOrders, updateOrderStatus } = require('../controller/userCtrl')
+const { authMiddleWare, isAdmin } = require('../middleware/authMiddleWare')
+const router = express.Router()
+
+router.post('/register', createUser)
+router.post('/login', loginUser)
+router.get('/getAllUsers', authMiddleWare,getAllUser)
+router.get('/getUser/:id', authMiddleWare, getUser)
+router.put('/updateUser/:id', authMiddleWare, updateUser)
+router.delete('/deleteUser/:id', authMiddleWare, deleteUser)
+router.put('/blockUser/:id', authMiddleWare, blockUser)
+router.put('/unblockUser/:id', authMiddleWare, unblockUser)
+router.get("/refresh", handleRefreshToken)
+router.get("/logout", logout)
+router.put("/updatePassword", authMiddleWare, updatePassword)
+router.put("/forgotPasswordToken", forgotPasswordToken)
+router.put("/resetPassword/:token", resetPassword)
+router.get("/wishlist/:id", authMiddleWare, getWishList)
+router.post('/cart', authMiddleWare, userCart)
+router.get('/cart', authMiddleWare, getUserCart)
+router.delete('/empty-cart', authMiddleWare, emptyUserCart)
+router.post('/cash-order', authMiddleWare, createOrder)
+router.get('/orders', authMiddleWare, getOrders)
+router.put('/orders-status/:id', authMiddleWare, updateOrderStatus)
+
+
+module.exports = router
